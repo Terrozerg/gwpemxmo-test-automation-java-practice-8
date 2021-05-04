@@ -70,14 +70,42 @@ public class Client implements Iterable<Deposit>{
     }
 
     public int countPossibleToProlongDeposit(){
-        return (int) this.deposits.stream()
+        return (int) deposits.stream()
                 .filter(deposit -> deposit instanceof Prolongable && ((Prolongable) deposit).canToProlong())
                 .count();
     }
 
     @Override
     public Iterator<Deposit> iterator() {
-        return deposits.iterator();
+        return new Iterator<>() {
+            private int currIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                if(currIndex < deposits.size() && deposits.get(currIndex) != null){
+                    return true;
+                }
+                else{
+                    throw new NoSuchElementException();
+                }
+            }
+
+            @Override
+            public Deposit next() {
+                int i = currIndex;
+                if(i >= deposits.size()){
+                    throw new NoSuchElementException();
+                }
+
+                currIndex++;
+                return deposits.get(i);
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 }
 
