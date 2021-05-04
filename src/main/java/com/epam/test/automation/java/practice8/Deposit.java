@@ -3,6 +3,7 @@ package com.epam.test.automation.java.practice8;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 /**
  * <summary>
@@ -49,6 +50,19 @@ public abstract class Deposit implements Comparable<Deposit>{
     @Override
     public int compareTo(Deposit o) {
         return o.income().compareTo(this.income());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Deposit)) return false;
+        Deposit deposit = (Deposit) o;
+        return period == deposit.period && Objects.equals(amount, deposit.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, period);
     }
 }
 

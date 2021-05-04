@@ -5,15 +5,17 @@ import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ClientTest {
     private List<Deposit> deposits = new ArrayList<>(List.of(
             new BaseDeposit(BigDecimal.valueOf(1000), 7),
             new BaseDeposit(BigDecimal.valueOf(2000), 3),
             new LongDeposit(BigDecimal.valueOf(1000), 10),
-            new SpecialDeposit(BigDecimal.valueOf(500), 5),
-            new SpecialDeposit(BigDecimal.valueOf(130), 7)
+            new SpecialDeposit(BigDecimal.valueOf(5000), 5),
+            new SpecialDeposit(BigDecimal.valueOf(1300), 7)
     ));
     Client client = new Client(deposits);
 
@@ -60,7 +62,7 @@ public class ClientTest {
 
     @Test
     public void testMaxIncome(){
-        Assert.assertEquals(client.maxIncome(), deposits.get(2).income());
+        Assert.assertEquals(client.maxIncome(), deposits.get(3).income());
     }
 
     @Test
@@ -76,12 +78,25 @@ public class ClientTest {
 
     @Test
     public void testIteratorNext(){
-        Assert.assertNotNull(deposits.iterator().next());
+        Iterator<Deposit> iterator = deposits.iterator();
+        Assert.assertNotNull(iterator.next());
+    }
+
+    @Test(expectedExceptions = NoSuchElementException.class)
+    public void testIteratorNoNextElement(){
+        Iterator<Deposit> iterator = deposits.iterator();
+        while(iterator.hasNext()) {
+            Assert.assertNotNull(iterator.next());
+        }
+        iterator.next();
     }
 
     @Test
     public void testIteratorHasNext(){
-        Assert.assertTrue(deposits.iterator().hasNext());
+        Iterator<Deposit> iterator = deposits.iterator();
+        while(iterator.hasNext()) {
+            Assert.assertNotNull(iterator.next());
+        }
     }
 
     @Test
@@ -97,6 +112,6 @@ public class ClientTest {
 
     @Test
     public void testCountPossibleToProlongDeposit(){
-        Assert.assertEquals(client.countPossibleToProlongDeposit(), 3);
+        Assert.assertEquals(client.countPossibleToProlongDeposit(), 2);
     }
 }

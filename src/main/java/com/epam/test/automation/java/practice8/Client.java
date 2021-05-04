@@ -1,9 +1,7 @@
 package com.epam.test.automation.java.practice8;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * <summary>
@@ -13,6 +11,7 @@ import java.util.List;
 
 public class Client implements Iterable<Deposit>{
     private List<Deposit> deposits;
+
     private int capacity;
 
     public Client() {
@@ -30,6 +29,10 @@ public class Client implements Iterable<Deposit>{
 
     public List<Deposit> getDeposits() {
         return deposits;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 
     public boolean addDeposit(Deposit deposit){
@@ -73,8 +76,7 @@ public class Client implements Iterable<Deposit>{
 
     public int countPossibleToProlongDeposit(){
         return (int) this.deposits.stream()
-                .filter(deposit -> deposit instanceof Prolongable)
-                .map(deposit -> ((Prolongable) deposit).canToProlong())
+                .filter(deposit -> deposit instanceof Prolongable && ((Prolongable) deposit).canToProlong())
                 .count();
     }
 
@@ -82,15 +84,22 @@ public class Client implements Iterable<Deposit>{
     public Iterator<Deposit> iterator() {
         return new Iterator<>() {
             private int currIndex = 0;
+            private final List<Deposit> copy = List.copyOf(deposits);
+            private final int capacityCopy = capacity;
 
             @Override
             public boolean hasNext() {
-                return deposits.size() < capacity && deposits.get(currIndex)!=null;
+                return copy.size() < capacityCopy && copy.get(currIndex)!=null;
             }
 
             @Override
             public Deposit next() {
-                return deposits.get(currIndex++);
+                System.out.println(currIndex);
+                if(currIndex >= copy.size()){
+                    throw new NoSuchElementException();
+                }
+
+                return copy.get(currIndex++);
             }
         };
     }
