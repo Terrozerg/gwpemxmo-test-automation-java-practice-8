@@ -89,6 +89,18 @@ public class ClientTest {
         }
     }
 
+    @Test
+    public void testIteratorHasNoNext(){
+        Iterator<Deposit> iterator = client.iterator();
+        Assert.assertNotNull(iterator.next());
+
+        while (iterator.hasNext()){
+            Assert.assertNotNull(iterator.next());
+        }
+
+        Assert.assertFalse(iterator.hasNext());
+    }
+
     @Test(expectedExceptions = NoSuchElementException.class)
     public void testIteratorNoNextElement(){
         List<Deposit> depositList = new ArrayList<>(List.copyOf(deposits));

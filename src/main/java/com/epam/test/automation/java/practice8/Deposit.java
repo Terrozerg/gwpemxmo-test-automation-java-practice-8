@@ -49,7 +49,7 @@ public abstract class Deposit implements Comparable<Deposit>{
 
     @Override
     public int compareTo(Deposit o) {
-        return o.income().compareTo(this.income());
+        return (o.income().add(o.amount)).compareTo(this.income().add(this.amount));
     }
 
     @Override
@@ -57,7 +57,7 @@ public abstract class Deposit implements Comparable<Deposit>{
         if (this == o) return true;
         if (!(o instanceof Deposit)) return false;
         Deposit deposit = (Deposit) o;
-        return period == deposit.period && Objects.equals(amount, deposit.amount);
+        return deposit.compareTo(this) == 0;
     }
 
     @Override
