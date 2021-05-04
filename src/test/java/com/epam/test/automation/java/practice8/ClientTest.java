@@ -84,15 +84,14 @@ public class ClientTest {
 
     @Test
     public void testIteratorHasNext(){
-        for (Deposit deposit : client) {
-            Assert.assertNotNull(deposit);
-        }
+        Iterator<Deposit> iterator = client.iterator();
+
+        Assert.assertTrue(iterator.hasNext());
     }
 
     @Test
     public void testIteratorHasNoNext(){
         Iterator<Deposit> iterator = client.iterator();
-        Assert.assertNotNull(iterator.next());
 
         while (iterator.hasNext()){
             Assert.assertNotNull(iterator.next());
@@ -103,10 +102,9 @@ public class ClientTest {
 
     @Test(expectedExceptions = NoSuchElementException.class)
     public void testIteratorNoNextElement(){
-        List<Deposit> depositList = new ArrayList<>(List.copyOf(deposits));
-        Client test = new Client(depositList);
+        Client test = new Client();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             test.addDeposit(new BaseDeposit(BigDecimal.valueOf(2000), 18));
         }
 

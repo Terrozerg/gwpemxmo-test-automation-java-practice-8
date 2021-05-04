@@ -83,7 +83,7 @@ public class Client implements Iterable<Deposit>{
 
             @Override
             public boolean hasNext() {
-                return currIndex < copy.size();
+                return currIndex < copy.size() && copy.get(currIndex) != null;
             }
 
             @Override
