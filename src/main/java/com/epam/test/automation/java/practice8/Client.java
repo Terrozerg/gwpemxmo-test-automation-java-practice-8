@@ -77,26 +77,7 @@ public class Client implements Iterable<Deposit>{
 
     @Override
     public Iterator<Deposit> iterator() {
-        return new Iterator<>() {
-            private int currIndex = 0;
-            private final List<Deposit> copy = List.copyOf(deposits);
-
-            @Override
-            public boolean hasNext() {
-                return currIndex < copy.size() && copy.get(currIndex) != null;
-            }
-
-            @Override
-            public Deposit next() {
-                int i = currIndex;
-                if(i >= copy.size()){
-                    throw new NoSuchElementException();
-                }
-
-                currIndex++;
-                return copy.get(i);
-            }
-        };
+        return deposits.iterator();
     }
 }
 
