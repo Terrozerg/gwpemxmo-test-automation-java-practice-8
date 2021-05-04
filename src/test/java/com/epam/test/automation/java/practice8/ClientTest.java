@@ -78,33 +78,52 @@ public class ClientTest {
 
     @Test
     public void testIteratorNext(){
-        Iterator<Deposit> iterator = deposits.iterator();
+        Iterator<Deposit> iterator = client.iterator();
         Assert.assertNotNull(iterator.next());
-    }
-
-    @Test(expectedExceptions = NoSuchElementException.class)
-    public void testIteratorNoNextElement(){
-        Iterator<Deposit> iterator = deposits.iterator();
-        while(iterator.hasNext()) {
-            Assert.assertNotNull(iterator.next());
-        }
-        iterator.next();
     }
 
     @Test
     public void testIteratorHasNext(){
-        Iterator<Deposit> iterator = deposits.iterator();
+        for (Deposit deposit : client) {
+            Assert.assertNotNull(deposit);
+        }
+    }
+
+    @Test(expectedExceptions = NoSuchElementException.class)
+    public void testIteratorNoNextElement(){
+        List<Deposit> depositList = new ArrayList<>(List.copyOf(deposits));
+        Client test = new Client(depositList);
+
+        for (int i = 0; i < 5; i++) {
+            test.addDeposit(new BaseDeposit(BigDecimal.valueOf(2000), 18));
+        }
+
+        Iterator<Deposit> iterator = test.iterator();
+
         while(iterator.hasNext()) {
             Assert.assertNotNull(iterator.next());
         }
+
+        iterator.next();
     }
 
     @Test
     public void testSortDeposits(){
-        List<Deposit> sortedDeposits = deposits;
+        List<Deposit> sortedDeposits = new ArrayList<>(List.copyOf(deposits));
         sortedDeposits.sort(Deposit::compareTo);
 
-        Client sortedClient = new Client(deposits);
+        Client sortedClient = new Client(new ArrayList<>(List.copyOf(deposits)));
+        sortedClient.sortDeposits();
+
+        Assert.assertEquals(sortedDeposits, sortedClient.getDeposits());
+    }
+
+    @Test
+    public void testSortDepositsWithEmptyDeposits(){
+        List<Deposit> sortedDeposits = new ArrayList<>(0);
+        sortedDeposits.sort(Deposit::compareTo);
+
+        Client sortedClient = new Client(new ArrayList<>(0));
         sortedClient.sortDeposits();
 
         Assert.assertEquals(sortedDeposits, sortedClient.getDeposits());

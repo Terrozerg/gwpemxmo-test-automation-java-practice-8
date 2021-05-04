@@ -12,11 +12,10 @@ import java.util.*;
 public class Client implements Iterable<Deposit>{
     private List<Deposit> deposits;
 
-    private int capacity;
+    private int capacity = 10;
 
     public Client() {
         this.deposits = new ArrayList<>(10);
-        this.capacity = 10;
     }
 
     public Client(List<Deposit> deposits){
@@ -24,15 +23,11 @@ public class Client implements Iterable<Deposit>{
             throw new IllegalArgumentException("Cannot create array of null deposits.");
         }
         this.deposits = deposits;
-        this.capacity = deposits.size();
+        this.capacity-=deposits.size();
     }
 
     public List<Deposit> getDeposits() {
         return deposits;
-    }
-
-    public int getCapacity() {
-        return capacity;
     }
 
     public boolean addDeposit(Deposit deposit){
@@ -71,7 +66,7 @@ public class Client implements Iterable<Deposit>{
     }
 
     public void sortDeposits(){
-        this.deposits.sort(Deposit::compareTo);
+        deposits.sort(Deposit::compareTo);
     }
 
     public int countPossibleToProlongDeposit(){
@@ -85,21 +80,21 @@ public class Client implements Iterable<Deposit>{
         return new Iterator<>() {
             private int currIndex = 0;
             private final List<Deposit> copy = List.copyOf(deposits);
-            private final int capacityCopy = capacity;
 
             @Override
             public boolean hasNext() {
-                return copy.size() < capacityCopy && copy.get(currIndex)!=null;
+                return currIndex < copy.size();
             }
 
             @Override
             public Deposit next() {
-                System.out.println(currIndex);
-                if(currIndex >= copy.size()){
+                int i = currIndex;
+                if(i >= copy.size()){
                     throw new NoSuchElementException();
                 }
 
-                return copy.get(currIndex++);
+                currIndex++;
+                return copy.get(i);
             }
         };
     }
