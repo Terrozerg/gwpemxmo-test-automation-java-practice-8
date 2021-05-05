@@ -89,7 +89,7 @@ public class Client implements Iterable<Deposit>{
             public Deposit next() {
                 int i = currIndex;
                 Deposit curr;
-                if(!hasNext()){
+                if(currIndex >= deposits.size()){
                     throw new NoSuchElementException();
                 }
 
