@@ -123,9 +123,11 @@ public class ClientTest {
 
         Iterator<Deposit> iterator = test.iterator();
 
-        while(true) {
+        while(iterator.hasNext()) {
             iterator.next();
         }
+
+        iterator.next();
     }
 
     @Test
