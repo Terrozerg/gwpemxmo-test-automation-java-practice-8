@@ -128,7 +128,6 @@ public class ClientTest {
         }
 
         iterator.next();
-        iterator.next();
     }
 
     @Test
