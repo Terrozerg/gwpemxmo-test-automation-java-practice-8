@@ -82,21 +82,16 @@ public class Client implements Iterable<Deposit>{
 
             @Override
             public boolean hasNext() {
-                return currIndex < deposits.size();
+                return currIndex < deposits.size()-1;
             }
 
             @Override
             public Deposit next() {
-                int i = currIndex;
-                Deposit curr;
                 if(currIndex >= deposits.size()){
                     throw new NoSuchElementException();
                 }
 
-                currIndex++;
-                curr = deposits.get(i);
-
-                return curr;
+                return deposits.get(currIndex++);
             }
 
             @Override
