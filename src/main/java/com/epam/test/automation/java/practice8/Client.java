@@ -2,7 +2,6 @@ package com.epam.test.automation.java.practice8;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * <summary>
@@ -91,15 +90,11 @@ public class Client implements Iterable<Deposit>{
                 int i = currIndex;
                 Deposit curr;
                 if(currIndex >= deposits.size()){
-                    return null;
+                    throw new NoSuchElementException();
                 }
 
                 currIndex++;
                 curr = deposits.get(i);
-
-                if(curr == null){
-                    throw new NoSuchElementException();
-                }
 
                 return curr;
             }
