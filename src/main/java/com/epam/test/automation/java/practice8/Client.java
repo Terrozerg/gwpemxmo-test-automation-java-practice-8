@@ -90,8 +90,10 @@ public class Client implements Iterable<Deposit>{
                 Deposit curr;
                 try{
                     curr = deposits.get(currIndex);
-                }catch (IndexOutOfBoundsException | NoSuchElementException e){
+                }catch (IndexOutOfBoundsException e){
                     throw new NoSuchElementException();
+                }catch (NoSuchElementException e){
+                    return null;
                 }
 
                 currIndex++;
