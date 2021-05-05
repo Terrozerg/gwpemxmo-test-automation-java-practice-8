@@ -86,7 +86,7 @@ public class Client implements Iterable<Deposit>{
             }
 
             @Override
-            public Deposit next() {
+            public Deposit next() throws NoSuchElementException{
                 int i = currIndex;
                 if(!hasNext()){
                     return null;

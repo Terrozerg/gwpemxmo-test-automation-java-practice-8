@@ -25,7 +25,7 @@ public class SpecialDeposit extends Deposit implements Prolongable{
     @Override
     public boolean canToProlong() {
         int result = this.getAmount().compareTo(BigDecimal.valueOf(1000));
-        return result >= 0;
+        return result > 0;
     }
 }
 
