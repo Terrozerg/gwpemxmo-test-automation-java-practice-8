@@ -31,7 +31,7 @@ public class LongDepositTest {
 
     @Test
     public void testCanToProlongFalse(){
-        LongDeposit deposit = new LongDeposit(BigDecimal.valueOf(100), 5);
+        LongDeposit deposit = new LongDeposit(BigDecimal.valueOf(100), 36);
         Assert.assertFalse(deposit.canToProlong());
     }
 }

@@ -13,7 +13,7 @@ public class ClientTest {
     private List<Deposit> deposits = new ArrayList<>(List.of(
             new BaseDeposit(BigDecimal.valueOf(1000), 7),
             new BaseDeposit(BigDecimal.valueOf(2000), 3),
-            new LongDeposit(BigDecimal.valueOf(1000), 10),
+            new LongDeposit(BigDecimal.valueOf(1000), 37),
             new SpecialDeposit(BigDecimal.valueOf(5000), 5),
             new SpecialDeposit(BigDecimal.valueOf(1300), 7)
     ));
@@ -62,7 +62,7 @@ public class ClientTest {
 
     @Test
     public void testMaxIncome(){
-        Assert.assertEquals(client.maxIncome(), deposits.get(3).income());
+        Assert.assertEquals(client.maxIncome(), deposits.get(2).income());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class ClientTest {
         Assert.assertFalse(iterator.hasNext());
     }
 
-    @Test
+    @Test(expectedExceptions = NoSuchElementException.class)
     public void testIteratorNoNextElement(){
         Client test = new Client();
 
@@ -122,7 +122,7 @@ public class ClientTest {
             Assert.assertNotNull(iterator.next());
         }
 
-        Assert.assertNull(iterator.next());
+        iterator.next();
     }
 
     @Test

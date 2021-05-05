@@ -28,7 +28,8 @@ public class LongDeposit extends Deposit implements Prolongable{
 
     @Override
     public boolean canToProlong() {
-        return this.getPeriod() < 3;
+        int period = this.getPeriod();
+        return period < 36;
     }
 }
 
