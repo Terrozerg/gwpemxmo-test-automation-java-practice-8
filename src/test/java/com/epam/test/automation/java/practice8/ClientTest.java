@@ -110,16 +110,21 @@ public class ClientTest {
 
     @Test(expectedExceptions = NoSuchElementException.class)
     public void testIteratorNoNextElement(){
-        Client test = new Client();
+        List<Deposit> depositList = new ArrayList<>(List.of(
+                new BaseDeposit(BigDecimal.valueOf(1000), 7),
+                new BaseDeposit(BigDecimal.valueOf(2000), 3),
+                new SpecialDeposit(BigDecimal.valueOf(5000), 5),
+                new SpecialDeposit(BigDecimal.valueOf(1300), 7)
+        ));
+        depositList.add(null);
+        depositList.add(null);
 
-        for (int i = 0; i < 10; i++) {
-            test.addDeposit(new BaseDeposit(BigDecimal.valueOf(2000), 18));
-        }
+        Client test = new Client(depositList);
 
         Iterator<Deposit> iterator = test.iterator();
 
         while(iterator.hasNext()) {
-            Assert.assertNotNull(iterator.next());
+            iterator.next();
         }
 
         iterator.next();
