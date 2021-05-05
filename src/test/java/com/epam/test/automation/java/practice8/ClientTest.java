@@ -108,7 +108,7 @@ public class ClientTest {
         Assert.assertFalse(iterator.hasNext());
     }
 
-    @Test(expectedExceptions = NoSuchElementException.class)
+    @Test
     public void testIteratorNoNextElement(){
         Client test = new Client();
 
@@ -122,7 +122,7 @@ public class ClientTest {
             Assert.assertNotNull(iterator.next());
         }
 
-        iterator.next();
+        Assert.assertNull(iterator.next());
     }
 
     @Test
