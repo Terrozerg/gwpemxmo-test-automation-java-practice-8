@@ -108,6 +108,17 @@ public class ClientTest {
         Assert.assertFalse(iterator.hasNext());
     }
 
+    @Test
+    public void testHasNextInIteratorWhenHasNextElements(){
+        Iterator<Deposit> iterator = client.iterator();
+
+        while (iterator.hasNext()){
+            Assert.assertNotNull(iterator.next());
+        }
+
+        iterator.next();
+    }
+
     @Test(expectedExceptions = NoSuchElementException.class)
     public void testIteratorNoNextElement(){
         List<Deposit> depositList = new ArrayList<>(List.of(
@@ -124,7 +135,7 @@ public class ClientTest {
         Iterator<Deposit> iterator = test.iterator();
 
         while(iterator.hasNext()) {
-            System.out.println(iterator.next());
+            iterator.next();
         }
 
         iterator.next();

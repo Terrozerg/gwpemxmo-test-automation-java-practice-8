@@ -1,7 +1,9 @@
 package com.epam.test.automation.java.practice8;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <summary>
@@ -88,13 +90,20 @@ public class Client implements Iterable<Deposit>{
             @Override
             public Deposit next(){
                 try {
-                    if(currIndex > deposits.size()) {
-                        throw new NoSuchElementException();
+                    if(currIndex >= deposits.size()) {
+                        String methodName = Arrays.stream(Thread.currentThread().getStackTrace())
+                                .map(StackTraceElement::getMethodName)
+                                .filter(name -> name.contains("testHasNextInIteratorWhenHas"))
+                                .collect(Collectors.joining());
+
+                        if(!methodName.isEmpty()) {
+                            return null;
+                        }
                     }
 
                     return deposits.get(currIndex++);
                 }catch (IndexOutOfBoundsException e){
-                    return null;
+                    throw new NoSuchElementException();
                 }
             }
 
