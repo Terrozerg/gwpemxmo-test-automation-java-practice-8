@@ -88,9 +88,13 @@ public class Client implements Iterable<Deposit>{
             @Override
             public Deposit next(){
                 try {
-                    return deposits.get(currIndex++);
+                    Deposit curr = deposits.get(currIndex++);
+                    if(curr == null) {
+                        throw new NoSuchElementException();
+                    }
+                    return curr;
                 }catch (IndexOutOfBoundsException e){
-                    throw new NoSuchElementException();
+                    return null;
                 }
             }
 
