@@ -88,7 +88,7 @@ public class Client implements Iterable<Deposit>{
             @Override
             public Deposit next(){
                 try {
-                    if(currIndex == deposits.size()) {
+                    if(currIndex > deposits.size()) {
                         throw new NoSuchElementException();
                     }
 
